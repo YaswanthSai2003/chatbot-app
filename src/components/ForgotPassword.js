@@ -17,32 +17,25 @@ export default function ForgotPassword() {
         <h2 style={styles.heading}>Forgot Password</h2>
 
         {isSuccess ? (
-          <p style={styles.successText}>
-            Check your email for the password reset link.
-          </p>
+          <p style={styles.successText}>Check your email for the password reset link.</p>
         ) : (
           <form onSubmit={handleSubmit} style={styles.form}>
             <input
               type="email"
               placeholder="Enter your email"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               required
               style={styles.input}
             />
-            <button
-              type="submit"
-              disabled={isLoading}
-              style={styles.button}
-            >
+            <button type="submit" disabled={isLoading} style={styles.button}>
               {isLoading ? 'Sending...' : 'Send Reset Link'}
             </button>
             {isError && <p style={styles.errorText}>{error.message}</p>}
           </form>
         )}
-
         <p style={styles.switchText}>
-          Remembered password? <Link to="/" style={styles.link}>Sign In here</Link>
+          Remembered your password? <Link to="/" style={styles.link}>Sign In here</Link>
         </p>
       </div>
     </div>
@@ -52,7 +45,8 @@ export default function ForgotPassword() {
 const styles = {
   container: {
     minHeight: '100vh',
-    backgroundImage: 'url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80")',
+    backgroundImage:
+      'url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     display: 'flex',
