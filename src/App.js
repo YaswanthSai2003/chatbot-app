@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { NhostProvider, useAuthenticationStatus } from '@nhost/react'
+import { NhostApolloProvider } from '@nhost/react-apollo'
+import { nhost } from './utils/nhost'
+import client from './utils/apollo'
+import Auth from './components/Auth'
+import ChatList from './components/ChatList'
+import ChatMessages from './components/ChatMessages'
 
-function App() {
+function ChatApp() {
+  const { isAuthenticated, isLoading } = useAuthenticationStatus()
+  const [selectedChatId, setSelectedChatId] = useState(null)
+
+  if (isLoading) return <div>Loading...</div>
+  if (!isAuthenticated) return <Auth />
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: 'flex', height: '100vh', fontFamily: 'Arial, sans-serif' }}>
+      <ChatList selectedChatId={selectedChatId} onSelect={setSelectedChatId} />
+      <ChatMessages chatId={selectedChatId} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default function App() {
+  return (
+    <NhostProvider nhost={nhost}>
+      <NhostApolloProvider nhost={nhost} apolloClient={client}>
+        <ChatApp />
+      </NhostApolloProvider>
+    </NhostProvider>
+  )
+}
