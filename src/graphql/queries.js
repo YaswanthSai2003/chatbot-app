@@ -50,7 +50,7 @@ export const CREATE_MESSAGE = gql`
 `
 
 export const SEND_MESSAGE_ACTION = gql`
-  mutation SendMessage($chat_id: uuid!, $message: String!) {
+  mutation sendMessage($chat_id: uuid!, $message: String!) {
   sendMessage(chat_id: $chat_id, message: $message) {
     success
     message
